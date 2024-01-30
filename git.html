@@ -1,734 +1,734 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Git Practices</title><style>
-	/* cspell:disable-file */
-	/* webkit printing magic: print all background colors */
-	html {
-		-webkit-print-color-adjust: exact;
-	}
-	* {
-		box-sizing: border-box;
-		-webkit-print-color-adjust: exact;
-	}
-	
-	html,
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
 	body {
-		margin: 0;
-		padding: 0;
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
 	}
-	@media only screen {
-		body {
-			margin: 2em auto;
-			max-width: 900px;
-			color: rgb(55, 53, 47);
-		}
-	}
-	
-	body {
-		line-height: 1.5;
-		white-space: pre-wrap;
-	}
-	
-	a,
-	a.visited {
-		color: inherit;
-		text-decoration: underline;
-	}
-	
-	.pdf-relative-link-path {
-		font-size: 80%;
-		color: #444;
-	}
-	
-	h1,
-	h2,
-	h3 {
-		letter-spacing: -0.01em;
-		line-height: 1.2;
-		font-weight: 600;
-		margin-bottom: 0;
-	}
-	
-	.page-title {
-		font-size: 2.5rem;
-		font-weight: 700;
-		margin-top: 0;
-		margin-bottom: 0.75em;
-	}
-	
-	h1 {
-		font-size: 1.875rem;
-		margin-top: 1.875rem;
-	}
-	
-	h2 {
-		font-size: 1.5rem;
-		margin-top: 1.5rem;
-	}
-	
-	h3 {
-		font-size: 1.25rem;
-		margin-top: 1.25rem;
-	}
-	
-	.source {
-		border: 1px solid #ddd;
-		border-radius: 3px;
-		padding: 1.5em;
-		word-break: break-all;
-	}
-	
-	.callout {
-		border-radius: 3px;
-		padding: 1rem;
-	}
-	
-	figure {
-		margin: 1.25em 0;
-		page-break-inside: avoid;
-	}
-	
-	figcaption {
-		opacity: 0.5;
-		font-size: 85%;
-		margin-top: 0.5em;
-	}
-	
-	mark {
-		background-color: transparent;
-	}
-	
-	.indented {
-		padding-left: 1.5em;
-	}
-	
-	hr {
-		background: transparent;
-		display: block;
-		width: 100%;
-		height: 1px;
-		visibility: visible;
-		border: none;
-		border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-	}
-	
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
 	img {
-		max-width: 100%;
-	}
-	
-	@media only print {
-		img {
-			max-height: 100vh;
-			object-fit: contain;
-		}
-	}
-	
-	@page {
-		margin: 1in;
-	}
-	
-	.collection-content {
-		font-size: 0.875rem;
-	}
-	
-	.column-list {
-		display: flex;
-		justify-content: space-between;
-	}
-	
-	.column {
-		padding: 0 1em;
-	}
-	
-	.column:first-child {
-		padding-left: 0;
-	}
-	
-	.column:last-child {
-		padding-right: 0;
-	}
-	
-	.table_of_contents-item {
-		display: block;
-		font-size: 0.875rem;
-		line-height: 1.3;
-		padding: 0.125rem;
-	}
-	
-	.table_of_contents-indent-1 {
-		margin-left: 1.5rem;
-	}
-	
-	.table_of_contents-indent-2 {
-		margin-left: 3rem;
-	}
-	
-	.table_of_contents-indent-3 {
-		margin-left: 4.5rem;
-	}
-	
-	.table_of_contents-link {
-		text-decoration: none;
-		opacity: 0.7;
-		border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-	}
-	
-	table,
-	th,
-	td {
-		border: 1px solid rgba(55, 53, 47, 0.09);
-		border-collapse: collapse;
-	}
-	
-	table {
-		border-left: none;
-		border-right: none;
-	}
-	
-	th,
-	td {
-		font-weight: normal;
-		padding: 0.25em 0.5em;
-		line-height: 1.5;
-		min-height: 1.5em;
-		text-align: left;
-	}
-	
-	th {
-		color: rgba(55, 53, 47, 0.6);
-	}
-	
-	ol,
-	ul {
-		margin: 0;
-		margin-block-start: 0.6em;
-		margin-block-end: 0.6em;
-	}
-	
-	li > ol:first-child,
-	li > ul:first-child {
-		margin-block-start: 0.6em;
-	}
-	
-	ul > li {
-		list-style: disc;
-	}
-	
-	ul.to-do-list {
-		padding-inline-start: 0;
-	}
-	
-	ul.to-do-list > li {
-		list-style: none;
-	}
-	
-	.to-do-children-checked {
-		text-decoration: line-through;
-		opacity: 0.375;
-	}
-	
-	ul.toggle > li {
-		list-style: none;
-	}
-	
-	ul {
-		padding-inline-start: 1.7em;
-	}
-	
-	ul > li {
-		padding-left: 0.1em;
-	}
-	
-	ol {
-		padding-inline-start: 1.6em;
-	}
-	
-	ol > li {
-		padding-left: 0.2em;
-	}
-	
-	.mono ol {
-		padding-inline-start: 2em;
-	}
-	
-	.mono ol > li {
-		text-indent: -0.4em;
-	}
-	
-	.toggle {
-		padding-inline-start: 0em;
-		list-style-type: none;
-	}
-	
-	/* Indent toggle children */
-	.toggle > li > details {
-		padding-left: 1.7em;
-	}
-	
-	.toggle > li > details > summary {
-		margin-left: -1.1em;
-	}
-	
-	.selected-value {
-		display: inline-block;
-		padding: 0 0.5em;
-		background: rgba(206, 205, 202, 0.5);
-		border-radius: 3px;
-		margin-right: 0.5em;
-		margin-top: 0.3em;
-		margin-bottom: 0.3em;
-		white-space: nowrap;
-	}
-	
-	.collection-title {
-		display: inline-block;
-		margin-right: 1em;
-	}
-	
-	.page-description {
-		margin-bottom: 2em;
-	}
-	
-	.simple-table {
-		margin-top: 1em;
-		font-size: 0.875rem;
-		empty-cells: show;
-	}
-	.simple-table td {
-		height: 29px;
-		min-width: 120px;
-	}
-	
-	.simple-table th {
-		height: 29px;
-		min-width: 120px;
-	}
-	
-	.simple-table-header-color {
-		background: rgb(247, 246, 243);
-		color: black;
-	}
-	.simple-table-header {
-		font-weight: 500;
-	}
-	
-	time {
-		opacity: 0.5;
-	}
-	
-	.icon {
-		display: inline-block;
-		max-width: 1.2em;
-		max-height: 1.2em;
-		text-decoration: none;
-		vertical-align: text-bottom;
-		margin-right: 0.5em;
-	}
-	
-	img.icon {
-		border-radius: 3px;
-	}
-	
-	.user-icon {
-		width: 1.5em;
-		height: 1.5em;
-		border-radius: 100%;
-		margin-right: 0.5rem;
-	}
-	
-	.user-icon-inner {
-		font-size: 0.8em;
-	}
-	
-	.text-icon {
-		border: 1px solid #000;
-		text-align: center;
-	}
-	
-	.page-cover-image {
-		display: block;
-		object-fit: cover;
-		width: 100%;
-		max-height: 30vh;
-	}
-	
-	.page-header-icon {
-		font-size: 3rem;
-		margin-bottom: 1rem;
-	}
-	
-	.page-header-icon-with-cover {
-		margin-top: -0.72em;
-		margin-left: 0.07em;
-	}
-	
-	.page-header-icon img {
-		border-radius: 3px;
-	}
-	
-	.link-to-page {
-		margin: 1em 0;
-		padding: 0;
-		border: none;
-		font-weight: 500;
-	}
-	
-	p > .user {
-		opacity: 0.5;
-	}
-	
-	td > .user,
-	td > time {
-		white-space: nowrap;
-	}
-	
-	input[type="checkbox"] {
-		transform: scale(1.5);
-		margin-right: 0.6em;
-		vertical-align: middle;
-	}
-	
-	p {
-		margin-top: 0.5em;
-		margin-bottom: 0.5em;
-	}
-	
-	.image {
-		border: none;
-		margin: 1.5em 0;
-		padding: 0;
-		border-radius: 0;
-		text-align: center;
-	}
-	
-	.code,
-	code {
-		background: rgba(135, 131, 120, 0.15);
-		border-radius: 3px;
-		padding: 0.2em 0.4em;
-		border-radius: 3px;
-		font-size: 85%;
-		tab-size: 2;
-	}
-	
-	code {
-		color: #eb5757;
-	}
-	
-	.code {
-		padding: 1.5em 1em;
-	}
-	
-	.code-wrap {
-		white-space: pre-wrap;
-		word-break: break-all;
-	}
-	
-	.code > code {
-		background: none;
-		padding: 0;
-		font-size: 100%;
-		color: inherit;
-	}
-	
-	blockquote {
-		font-size: 1.25em;
-		margin: 1em 0;
-		padding-left: 1em;
-		border-left: 3px solid rgb(55, 53, 47);
-	}
-	
-	.bookmark {
-		text-decoration: none;
-		max-height: 8em;
-		padding: 0;
-		display: flex;
-		width: 100%;
-		align-items: stretch;
-	}
-	
-	.bookmark-title {
-		font-size: 0.85em;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		height: 1.75em;
-		white-space: nowrap;
-	}
-	
-	.bookmark-text {
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.bookmark-info {
-		flex: 4 1 180px;
-		padding: 12px 14px 14px;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
-	
-	.bookmark-image {
-		width: 33%;
-		flex: 1 1 180px;
-		display: block;
-		position: relative;
-		object-fit: cover;
-		border-radius: 1px;
-	}
-	
-	.bookmark-description {
-		color: rgba(55, 53, 47, 0.6);
-		font-size: 0.75em;
-		overflow: hidden;
-		max-height: 4.5em;
-		word-break: break-word;
-	}
-	
-	.bookmark-href {
-		font-size: 0.75em;
-		margin-top: 0.25em;
-	}
-	
-	.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-	.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-	.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-	.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-	.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
-	.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
-	.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
-	.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
-	.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-	.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-	.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-	.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-	.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
-	.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
-	.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
-	.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
-	.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-	.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-	.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-	.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-	.highlight-default {
-		color: rgba(55, 53, 47, 1);
-	}
-	.highlight-gray {
-		color: rgba(120, 119, 116, 1);
-		fill: rgba(120, 119, 116, 1);
-	}
-	.highlight-brown {
-		color: rgba(159, 107, 83, 1);
-		fill: rgba(159, 107, 83, 1);
-	}
-	.highlight-orange {
-		color: rgba(217, 115, 13, 1);
-		fill: rgba(217, 115, 13, 1);
-	}
-	.highlight-yellow {
-		color: rgba(203, 145, 47, 1);
-		fill: rgba(203, 145, 47, 1);
-	}
-	.highlight-teal {
-		color: rgba(68, 131, 97, 1);
-		fill: rgba(68, 131, 97, 1);
-	}
-	.highlight-blue {
-		color: rgba(51, 126, 169, 1);
-		fill: rgba(51, 126, 169, 1);
-	}
-	.highlight-purple {
-		color: rgba(144, 101, 176, 1);
-		fill: rgba(144, 101, 176, 1);
-	}
-	.highlight-pink {
-		color: rgba(193, 76, 138, 1);
-		fill: rgba(193, 76, 138, 1);
-	}
-	.highlight-red {
-		color: rgba(212, 76, 71, 1);
-		fill: rgba(212, 76, 71, 1);
-	}
-	.highlight-gray_background {
-		background: rgba(241, 241, 239, 1);
-	}
-	.highlight-brown_background {
-		background: rgba(244, 238, 238, 1);
-	}
-	.highlight-orange_background {
-		background: rgba(251, 236, 221, 1);
-	}
-	.highlight-yellow_background {
-		background: rgba(251, 243, 219, 1);
-	}
-	.highlight-teal_background {
-		background: rgba(237, 243, 236, 1);
-	}
-	.highlight-blue_background {
-		background: rgba(231, 243, 248, 1);
-	}
-	.highlight-purple_background {
-		background: rgba(244, 240, 247, 0.8);
-	}
-	.highlight-pink_background {
-		background: rgba(249, 238, 243, 0.8);
-	}
-	.highlight-red_background {
-		background: rgba(253, 235, 236, 1);
-	}
-	.block-color-default {
-		color: inherit;
-		fill: inherit;
-	}
-	.block-color-gray {
-		color: rgba(120, 119, 116, 1);
-		fill: rgba(120, 119, 116, 1);
-	}
-	.block-color-brown {
-		color: rgba(159, 107, 83, 1);
-		fill: rgba(159, 107, 83, 1);
-	}
-	.block-color-orange {
-		color: rgba(217, 115, 13, 1);
-		fill: rgba(217, 115, 13, 1);
-	}
-	.block-color-yellow {
-		color: rgba(203, 145, 47, 1);
-		fill: rgba(203, 145, 47, 1);
-	}
-	.block-color-teal {
-		color: rgba(68, 131, 97, 1);
-		fill: rgba(68, 131, 97, 1);
-	}
-	.block-color-blue {
-		color: rgba(51, 126, 169, 1);
-		fill: rgba(51, 126, 169, 1);
-	}
-	.block-color-purple {
-		color: rgba(144, 101, 176, 1);
-		fill: rgba(144, 101, 176, 1);
-	}
-	.block-color-pink {
-		color: rgba(193, 76, 138, 1);
-		fill: rgba(193, 76, 138, 1);
-	}
-	.block-color-red {
-		color: rgba(212, 76, 71, 1);
-		fill: rgba(212, 76, 71, 1);
-	}
-	.block-color-gray_background {
-		background: rgba(241, 241, 239, 1);
-	}
-	.block-color-brown_background {
-		background: rgba(244, 238, 238, 1);
-	}
-	.block-color-orange_background {
-		background: rgba(251, 236, 221, 1);
-	}
-	.block-color-yellow_background {
-		background: rgba(251, 243, 219, 1);
-	}
-	.block-color-teal_background {
-		background: rgba(237, 243, 236, 1);
-	}
-	.block-color-blue_background {
-		background: rgba(231, 243, 248, 1);
-	}
-	.block-color-purple_background {
-		background: rgba(244, 240, 247, 0.8);
-	}
-	.block-color-pink_background {
-		background: rgba(249, 238, 243, 0.8);
-	}
-	.block-color-red_background {
-		background: rgba(253, 235, 236, 1);
-	}
-	.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
-	.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
-	.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
-	.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
-	.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
-	.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
-	.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
-	.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
-	.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
-	.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
-	.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
-	.select-value-color-pageGlass { background-color: undefined; }
-	.select-value-color-washGlass { background-color: undefined; }
-	
-	.checkbox {
-		display: inline-flex;
-		vertical-align: text-bottom;
-		width: 16;
-		height: 16;
-		background-size: 16px;
-		margin-left: 2px;
-		margin-right: 5px;
-	}
-	
-	.checkbox-on {
-		background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-	}
-	
-	.checkbox-off {
-		background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-	}
-		
-	</style></head><body><article id="9cc27472-c46f-4223-a6d2-c80c09d17472" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/branch-create_red.svg"/></div><h1 class="page-title"><strong>Git Practices</strong></h1><p class="page-description"></p></header><div class="page-body"><ul id="690476da-3263-4623-b3a1-cab1a4da0396" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git Config</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fcc05d1b-f3b0-478b-983c-05c11b00acef" class="code"><code class="language-JSON">git config user.name &quot;[USERNAME]&quot;</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6bc10105-f89e-4e78-94a4-9ebfd113240a" class="code"><code class="language-JSON">git config user.email  &quot;[EMAIL]&quot;</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8f2a144f-0b0d-4ef8-af12-c36f1b74c6c5" class="code"><code class="language-JavaScript">git config --list</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5723bd9d-ad48-43dc-9b14-69ec81752ebd" class="code"><code class="language-JavaScript">git config --list --show-origin</code></pre></details></li></ul><ul id="9975e4db-7b13-44b7-8578-23f9067ee2ec" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git profile Change Locally</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="117450e5-52bc-4748-9187-6616a62f05cb" class="code"><code class="language-JavaScript">git config --global user.name &quot;[USERNAME]&quot;</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="77cc8abf-f0a1-4eb5-8bdf-7188f9eac7d2" class="code"><code class="language-JavaScript">git config --global user.email &quot;[EMAIL]&quot;</code></pre></details></li></ul><ul id="5b8bfe3e-5914-487d-a15d-fe1992137384" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>New project add git hub</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32e8cd98-e435-4542-9f6c-3a75c63df5ec" class="code"><code class="language-JavaScript">git init
-	
-	git status
-	
-	git add .
-	
-	git commit -m &#x27;any message&#x27;
-	
-	git status
-	
-	git remote add origin [ Paste URL]
-	
-	git push origin master</code></pre></details></li></ul><ul id="400f2c93-17b9-47e1-8608-37c4469c264f" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Already add project</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="49f55519-6e3a-42d8-b38a-5cd0361e191c" class="code"><code class="language-JavaScript">git status (file path view red letter)
-	
-	git add [Changing project]
-	
-	git status (file path view green letter)
-	
-	git commit -m &#x27;any message&#x27;
-	
-	git status (general checkup)
-	
-	git push origin master</code></pre></details></li></ul><ul id="60a4fca6-e2cd-4f32-acbf-d1379e5c5ff3" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git Pull</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="27095fd9-c2d8-4a0f-88e6-9fa49554a8f5" class="code"><code class="language-JavaScript">git pull [Branch Name]</code></pre></details></li></ul><ul id="f335af76-24e8-47dd-9872-c47413dccef4" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git participation code</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e27114c3-69ad-4515-b8a3-e02469f59b32" class="code"><code class="language-JavaScript">git clone [url]</code></pre></details></li></ul><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Git branch</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">New Branch Create</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="267a38d5-c873-41c5-a6d9-92aaf8eb878c" class="code"><code class="language-Dart">git checkout -b [new Branch name]</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Change Branch Create</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1449b948-5f67-42ba-bbbc-2b7acac70e79" class="code"><code class="language-Dart">git checkout [Branch name]</code></pre><p id="ae77ad91-9bcd-4740-b0cc-6b716d1c69a2" class="">Or</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1fa29896-9ef6-44c7-bfdc-8d1635d9211c" class="code"><code class="language-Dart">git switch [Branch name]</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">To see local branches, run this command</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8e9aeefa-ff71-4258-8f29-647191e8ad51" class="code"><code class="language-Dart">git branch</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">To see remote branches, run this command</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fd10aad9-e243-4a91-89bd-59493cf8711a" class="code"><code class="language-Dart">git branch -r</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">To see all local and remote branches, run this command</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e60f9a1a-5883-49e9-a089-1e85d4fabd08" class="code"><code class="language-Dart">git branch -a</code></pre></div></details><ul id="55897bf0-e909-4d4a-945e-361f8a7a540c" class="toggle"><li><details open=""><summary><strong>git - pulling from specific branch</strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3202339f-c2c8-4aab-9822-d3144ea86fea" class="code"><code class="language-JavaScript">git pull origin daily</code></pre></details></li></ul><ul id="595a78bf-692e-42d3-9582-9b2979fda576" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Create and Change Another Branch</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="64f1a47f-ac00-409e-8356-bc777c24b0f5" class="code"><code class="language-JavaScript">git checkout -b [new Branch name]
-	
-	---- This is Change Locally-----
-	
-	git checkout [change Branch] ♤
-	
-	git push -u origin [new or change Branch name]
-	
-	----‐ First ------
-	
-	git status
-	
-	git add .
-	
-	git commit -m &#x27;any msg&#x27;
-	
-	git push origin [Branch name]</code></pre></details></li></ul></div></details><ul id="8d4d2cb9-a0b6-45b8-872f-c9db6fed7e2b" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>How contribute Gitcode</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="75f37afc-7d9c-4dfc-b94b-d1c3aa61ac78" class="code"><code class="language-JavaScript">git clone [url]</code></pre></details></li></ul><ul id="06a89172-eb6b-4511-b306-b8a0b9344660" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>How </strong></span><span style="border-bottom:0.05em solid"><strong>contribute</strong></span><span style="border-bottom:0.05em solid"><strong> Gitcode </strong></span><span style="border-bottom:0.05em solid"><strong>Branch</strong></span><span style="border-bottom:0.05em solid"><strong></strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d1958655-03b1-47a7-83f2-c954dcab9ac6" class="code"><code class="language-JavaScript">git clone -b [Branch name] [url]</code></pre></details></li></ul><ul id="5b2e5897-c730-4e9d-9624-5511ee607a55" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Undo Pull</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="87b0f38c-11ec-44b7-b161-852c4f935740" class="code"><code class="language-JavaScript">git reset --hard</code></pre></details></li></ul><ul id="c2c64295-0a9a-4017-886a-b5fcce90d19e" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Branch</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="def70d89-65b6-422a-8d1d-bb83e4ecb2f6" class="code"><code class="language-JavaScript">git reset --hard HEAD</code></pre></details></li></ul><ul id="3211029a-42be-45ba-ab91-9656c5dde9e0" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git remote [Connect with GitHub, GitLab and more]</strong></span></summary><p id="5a926bc7-4134-4548-be3c-54719bc45b9a" class=""><strong>Create</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f07ed81f-6688-45c9-906d-3fbf591b0d5a" class="code"><code class="language-JavaScript">git remote add origin [ Paste URL]</code></pre><p id="c40c5cc1-8065-4cdf-a762-1b776b42f5ae" class=""><strong>View</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="514ba10c-84a3-45bf-872a-347454683ff0" class="code"><code class="language-JavaScript">git remote -v</code></pre><p id="4a1948b9-1294-4a40-a948-9d23d3307902" class=""><strong>Update</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="88eb6070-0497-4025-ae54-898e5250b270" class="code"><code class="language-JavaScript">git remote set-url origin &quot;[new.git.url/here]&quot;</code></pre><p id="b4638303-37a3-4b20-a9c9-14f5cc30ebde" class=""><strong>Remove</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="85d7b949-4692-4718-bc0f-645126d09b46" class="code"><code class="language-JavaScript">git remote remove origin</code></pre></details></li></ul><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">git pull from old commit</summary><div class="indented"><p id="c2ee5aa5-c3f1-4205-8a1f-f1d8954af75f" class="">Refer :- <a href="https://stackoverflow.com/a/38333126/17656267">https://stackoverflow.com/a/38333126/17656267</a></p><p id="ecce5f70-998d-4847-a1ce-272382ce9039" class=""><span style="border-bottom:0.05em solid"><strong>Example and steps</strong></span></p><p id="9cff073b-6ff5-4415-8082-5d56787374c8" class=""><strong>Step 1:</strong> fetch list of commits:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="53a825a5-f755-41b7-bdc1-9606f7115803" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">git log</code></pre><p id="08f898cf-00a2-4ce6-a789-6ded8828c2ca" class="">You&#x27;ll get list like in this example:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b8ad2b0e-8adb-4394-abb1-468a0a821504" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[Comp:Folder User$ git log
-	commit 54b11d42e12dc6e9f070a8b5095a4492216d5320
-	Author: author &lt;author@gmail.com&gt;
-	Date:   Fri Jul 8 23:42:22 2016 +0300
-	
-	This is last commit message
-	
-	commit fd6cb176297acca4dbc69d15d6b7f78a2463482f
-	Author: author &lt;author@gmail.com&gt;
-	Date:   Fri Jun 24 20:20:24 2016 +0300
-	
-	This is previous commit message
-	
-	commit ab0de062136da650ffc27cfb57febac8efb84b8d
-	Author: author &lt;author@gmail.com&gt;
-	Date:   Thu Jun 23 00:41:55 2016 +0300
-	
-	This is previous previous commit message
-	...
-	</code></pre><p id="465da73f-b116-4b31-b125-b678526960b7" class=""><strong>Step 2:</strong> copy needed commit hash and paste it for checkout:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20cc2924-37b9-47df-9c61-aa199c0a3bc9" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">git checkout fd6cb176297acca4dbc69d15d6b7f78a2463482f</code></pre><p id="e7dc9b51-f6f9-4d54-b975-b23c11e910dd" class="">
-	</p></div></details></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9cc27472-c46f-4223-a6d2-c80c09d17472" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="https://www.notion.so/icons/branch-create_red.svg"/></div><h1 class="page-title"><strong>Git Practices</strong></h1><p class="page-description"></p></header><div class="page-body"><ul id="690476da-3263-4623-b3a1-cab1a4da0396" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git Config</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fcc05d1b-f3b0-478b-983c-05c11b00acef" class="code"><code class="language-JSON">git config user.name &quot;[USERNAME]&quot;</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6bc10105-f89e-4e78-94a4-9ebfd113240a" class="code"><code class="language-JSON">git config user.email  &quot;[EMAIL]&quot;</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8f2a144f-0b0d-4ef8-af12-c36f1b74c6c5" class="code"><code class="language-JavaScript">git config --list</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5723bd9d-ad48-43dc-9b14-69ec81752ebd" class="code"><code class="language-JavaScript">git config --list --show-origin</code></pre></details></li></ul><ul id="9975e4db-7b13-44b7-8578-23f9067ee2ec" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git profile Change Locally</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="117450e5-52bc-4748-9187-6616a62f05cb" class="code"><code class="language-JavaScript">git config --global user.name &quot;[USERNAME]&quot;</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="77cc8abf-f0a1-4eb5-8bdf-7188f9eac7d2" class="code"><code class="language-JavaScript">git config --global user.email &quot;[EMAIL]&quot;</code></pre></details></li></ul><ul id="5b8bfe3e-5914-487d-a15d-fe1992137384" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>New project add git hub</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="32e8cd98-e435-4542-9f6c-3a75c63df5ec" class="code"><code class="language-JavaScript">git init
+
+git status
+
+git add .
+
+git commit -m &#x27;any message&#x27;
+
+git status
+
+git remote add origin [ Paste URL]
+
+git push origin master</code></pre></details></li></ul><ul id="400f2c93-17b9-47e1-8608-37c4469c264f" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Already add project</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="49f55519-6e3a-42d8-b38a-5cd0361e191c" class="code"><code class="language-JavaScript">git status (file path view red letter)
+
+git add [Changing project]
+
+git status (file path view green letter)
+
+git commit -m &#x27;any message&#x27;
+
+git status (general checkup)
+
+git push origin master</code></pre></details></li></ul><ul id="60a4fca6-e2cd-4f32-acbf-d1379e5c5ff3" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git Pull</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="27095fd9-c2d8-4a0f-88e6-9fa49554a8f5" class="code"><code class="language-JavaScript">git pull [Branch Name]</code></pre></details></li></ul><ul id="f335af76-24e8-47dd-9872-c47413dccef4" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git participation code</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e27114c3-69ad-4515-b8a3-e02469f59b32" class="code"><code class="language-JavaScript">git clone [url]</code></pre></details></li></ul><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Git branch</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">New Branch Create</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="267a38d5-c873-41c5-a6d9-92aaf8eb878c" class="code"><code class="language-Dart">git checkout -b [new Branch name]</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Change Branch Create</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1449b948-5f67-42ba-bbbc-2b7acac70e79" class="code"><code class="language-Dart">git checkout [Branch name]</code></pre><p id="ae77ad91-9bcd-4740-b0cc-6b716d1c69a2" class="">Or</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1fa29896-9ef6-44c7-bfdc-8d1635d9211c" class="code"><code class="language-Dart">git switch [Branch name]</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">To see local branches, run this command</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8e9aeefa-ff71-4258-8f29-647191e8ad51" class="code"><code class="language-Dart">git branch</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">To see remote branches, run this command</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fd10aad9-e243-4a91-89bd-59493cf8711a" class="code"><code class="language-Dart">git branch -r</code></pre></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">To see all local and remote branches, run this command</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e60f9a1a-5883-49e9-a089-1e85d4fabd08" class="code"><code class="language-Dart">git branch -a</code></pre></div></details><ul id="55897bf0-e909-4d4a-945e-361f8a7a540c" class="toggle"><li><details open=""><summary><strong>git - pulling from specific branch</strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3202339f-c2c8-4aab-9822-d3144ea86fea" class="code"><code class="language-JavaScript">git pull origin daily</code></pre></details></li></ul><ul id="595a78bf-692e-42d3-9582-9b2979fda576" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Create and Change Another Branch</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="64f1a47f-ac00-409e-8356-bc777c24b0f5" class="code"><code class="language-JavaScript">git checkout -b [new Branch name]
+
+---- This is Change Locally-----
+
+git checkout [change Branch] ♤
+
+git push -u origin [new or change Branch name]
+
+----‐ First ------
+
+git status
+
+git add .
+
+git commit -m &#x27;any msg&#x27;
+
+git push origin [Branch name]</code></pre></details></li></ul></div></details><ul id="8d4d2cb9-a0b6-45b8-872f-c9db6fed7e2b" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>How contribute Gitcode</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="75f37afc-7d9c-4dfc-b94b-d1c3aa61ac78" class="code"><code class="language-JavaScript">git clone [url]</code></pre></details></li></ul><ul id="06a89172-eb6b-4511-b306-b8a0b9344660" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>How </strong></span><span style="border-bottom:0.05em solid"><strong>contribute</strong></span><span style="border-bottom:0.05em solid"><strong> Gitcode </strong></span><span style="border-bottom:0.05em solid"><strong>Branch</strong></span><span style="border-bottom:0.05em solid"><strong></strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d1958655-03b1-47a7-83f2-c954dcab9ac6" class="code"><code class="language-JavaScript">git clone -b [Branch name] [url]</code></pre></details></li></ul><ul id="5b2e5897-c730-4e9d-9624-5511ee607a55" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Undo Pull</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="87b0f38c-11ec-44b7-b161-852c4f935740" class="code"><code class="language-JavaScript">git reset --hard</code></pre></details></li></ul><ul id="c2c64295-0a9a-4017-886a-b5fcce90d19e" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Branch</strong></span></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="def70d89-65b6-422a-8d1d-bb83e4ecb2f6" class="code"><code class="language-JavaScript">git reset --hard HEAD</code></pre></details></li></ul><ul id="3211029a-42be-45ba-ab91-9656c5dde9e0" class="toggle"><li><details open=""><summary><span style="border-bottom:0.05em solid"><strong>Git remote [Connect with GitHub, GitLab and more]</strong></span></summary><p id="5a926bc7-4134-4548-be3c-54719bc45b9a" class=""><strong>Create</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f07ed81f-6688-45c9-906d-3fbf591b0d5a" class="code"><code class="language-JavaScript">git remote add origin [ Paste URL]</code></pre><p id="c40c5cc1-8065-4cdf-a762-1b776b42f5ae" class=""><strong>View</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="514ba10c-84a3-45bf-872a-347454683ff0" class="code"><code class="language-JavaScript">git remote -v</code></pre><p id="4a1948b9-1294-4a40-a948-9d23d3307902" class=""><strong>Update</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="88eb6070-0497-4025-ae54-898e5250b270" class="code"><code class="language-JavaScript">git remote set-url origin &quot;[new.git.url/here]&quot;</code></pre><p id="b4638303-37a3-4b20-a9c9-14f5cc30ebde" class=""><strong>Remove</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="85d7b949-4692-4718-bc0f-645126d09b46" class="code"><code class="language-JavaScript">git remote remove origin</code></pre></details></li></ul><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">git pull from old commit</summary><div class="indented"><p id="c2ee5aa5-c3f1-4205-8a1f-f1d8954af75f" class="">Refer :- <a href="https://stackoverflow.com/a/38333126/17656267">https://stackoverflow.com/a/38333126/17656267</a></p><p id="ecce5f70-998d-4847-a1ce-272382ce9039" class=""><span style="border-bottom:0.05em solid"><strong>Example and steps</strong></span></p><p id="9cff073b-6ff5-4415-8082-5d56787374c8" class=""><strong>Step 1:</strong> fetch list of commits:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="53a825a5-f755-41b7-bdc1-9606f7115803" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">git log</code></pre><p id="08f898cf-00a2-4ce6-a789-6ded8828c2ca" class="">You&#x27;ll get list like in this example:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b8ad2b0e-8adb-4394-abb1-468a0a821504" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[Comp:Folder User$ git log
+commit 54b11d42e12dc6e9f070a8b5095a4492216d5320
+Author: author &lt;author@gmail.com&gt;
+Date:   Fri Jul 8 23:42:22 2016 +0300
+
+This is last commit message
+
+commit fd6cb176297acca4dbc69d15d6b7f78a2463482f
+Author: author &lt;author@gmail.com&gt;
+Date:   Fri Jun 24 20:20:24 2016 +0300
+
+This is previous commit message
+
+commit ab0de062136da650ffc27cfb57febac8efb84b8d
+Author: author &lt;author@gmail.com&gt;
+Date:   Thu Jun 23 00:41:55 2016 +0300
+
+This is previous previous commit message
+...
+</code></pre><p id="465da73f-b116-4b31-b125-b678526960b7" class=""><strong>Step 2:</strong> copy needed commit hash and paste it for checkout:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20cc2924-37b9-47df-9c61-aa199c0a3bc9" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">git checkout fd6cb176297acca4dbc69d15d6b7f78a2463482f</code></pre><p id="e7dc9b51-f6f9-4d54-b975-b23c11e910dd" class="">
+</p></div></details></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
